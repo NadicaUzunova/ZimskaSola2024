@@ -42,7 +42,7 @@ jobs:
         working-directory: frontend
 
       - name: ESLint Check
-        run: npm run lint
+        run: npm run eslint
         continue-on-error: true
         
       - name: Build frontend
