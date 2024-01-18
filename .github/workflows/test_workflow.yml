@@ -67,12 +67,6 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v3
   
-        - name: Wait for PostgreSQL to be ready
-          uses: softprops/wait-for-status@v1
-          with:
-            url: http://localhost:5432
-            timeout: 120s
-  
         - name: Start Quarkus Backend
           run: |
             java -jar backend/target/quarkus-app/quarkus-run.jar
