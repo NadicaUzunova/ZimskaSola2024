@@ -44,6 +44,7 @@ jobs:
       - name: ESLint Check
         run: npm run eslint
         continue-on-error: true
+        working-directory: frontend
         
       - name: Build frontend
         run: npm run build --if--present
