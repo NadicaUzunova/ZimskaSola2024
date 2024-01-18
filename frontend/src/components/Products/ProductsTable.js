@@ -11,7 +11,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-export default function ProductsTable({ products, deleteProduct, editProduct }) {
+export default function ProductsTable({ filter, products, deleteProduct, editProduct }) {
+
+  const filteredProducts = products.filter(product =>
+    filter === '' || product.name.toLowerCase().includes(filter.toLowerCase())
+  );
+  console.log(filteredProducts);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -26,7 +32,7 @@ export default function ProductsTable({ products, deleteProduct, editProduct }) 
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((row) => (
+          {filteredProducts.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

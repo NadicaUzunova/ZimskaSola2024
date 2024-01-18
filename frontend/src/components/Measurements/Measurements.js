@@ -35,7 +35,7 @@ const Measurements = () => {
     return (
         <div style={{ padding: '25px' }}>
             <h2>Measurements</h2>
-            <Button variant="contained" id="AddMeasurementButton" onClick={handleOpen}>New measurement</Button>
+            <Button variant="contained" id="AddMeasurementButton" data-cy="addMeasurementButton" onClick={handleOpen}>New measurement</Button>
             <br />
             <br />
             {loaded ? <MeasurementsTable measurements={measurements} /> : <CircularProgress />}
