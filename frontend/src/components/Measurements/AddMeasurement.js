@@ -35,6 +35,7 @@ export default function AddMeasurement({ open, handleClose }) {
             setProductId("");
             setAvgTemp("");
         }
+        console.log(result);
     }
 
     useEffect(() => {
@@ -88,7 +89,7 @@ export default function AddMeasurement({ open, handleClose }) {
                         onChange={(event) => { setAvgTemp(event.target.value) }}
                     />
                     <div>
-                        <Button variant="contained" id="submitMeasurementButton" onClick={addMeasurement}>Add</Button>
+                        <Button variant="contained" id="submitMeasurementButton" data-cy="submitMeasurementButton" onClick={addMeasurement}>Add</Button>
                     </div>
                 </Box>
             </Modal>
