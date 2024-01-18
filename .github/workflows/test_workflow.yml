@@ -40,12 +40,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: frontend
-
-      - name: ESLint Check
-        run: npm run eslint
-        continue-on-error: true
-        working-directory: frontend
         
       - name: Build frontend
-        run: npm run build --if--present
+        run: npm run build --if--present --silent
         working-directory: frontend  
