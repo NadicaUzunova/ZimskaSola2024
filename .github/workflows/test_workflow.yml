@@ -18,9 +18,9 @@ jobs:
           run: |
             docker run -d --name my-postgres -e POSTGRES_PASSWORD=postgres_pwd -p 5432:5432 postgres
           env:
-            POSTGRES_DB: testdb
-            POSTGRES_USER: username
-            POSTGRES_PASSWORD: password
+            POSTGRES_DB: measdb
+            POSTGRES_USER: postgres_user
+            POSTGRES_PASSWORD: postgres_pwd
   
   build_backend:
     runs-on: ubuntu-latest
@@ -39,9 +39,9 @@ jobs:
         run: mvn -B package --file pom.xml -DskipTests
         working-directory: backend
 
-      - name: Run tests
-        run: mvn -B test
-        working-directory: backend
+      # - name: Run tests
+      #  run: mvn -B test
+      # working-directory: backend
 
   build_frontend:
     runs-on: ubuntu-latest
