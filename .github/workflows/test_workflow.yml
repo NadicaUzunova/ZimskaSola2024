@@ -70,3 +70,8 @@ jobs:
         - name: List contents of quarkus-app directory
           run: |
             ls -R backend/
+
+        - name: Start Quarkus Backend
+          run: |
+            java -jar backend/target/quarkus-app/quarkus-run.jar
+          working-directory: backend
