@@ -67,6 +67,6 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v3
   
-        - name: Start Quarkus Backend
+        - name: List contents of quarkus-app directory
           run: |
-            java -jar backend/target/quarkus-app/quarkus-run.jar
+            ls -R backend/
