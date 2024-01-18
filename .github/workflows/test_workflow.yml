@@ -45,4 +45,18 @@ jobs:
         run: npm run build --no-progress 2>&1 >/dev/null || true
         working-directory: frontend  
 
+  start_database:
+    runs-on: ubuntu-latest
+    needs: build_backend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Start PostgreSQL
+        run: |
+          docker run -d --name my-postgres -e POSTGRES_PASSWORD=postgres_pwd -p 5432:5432 postgres
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
       
