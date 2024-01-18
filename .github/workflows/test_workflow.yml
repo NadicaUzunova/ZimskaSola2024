@@ -24,8 +24,13 @@ jobs:
         run: mvn -B package --file pom.xml -DskipTests
         working-directory: backend
 
+      - name: Run tests
+        run: mvn -B test
+        working-directory: backend
+
   build_frontend:
     runs-on: ubuntu-latest
+    needs: [build_backend]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -59,34 +64,3 @@ jobs:
           POSTGRES_DB: testdb
           POSTGRES_USER: username
           POSTGRES_PASSWORD: password
-          
-  start_backend:
-    runs-on: ubuntu-latest
-    needs: [build_backend, start_database]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: List contents of backend directory
-        run: |
-          ls -R backend/
-
-      - name: Find Quarkus JAR file
-        id: find_jar
-        run: echo "::set-output name=jar_path::$(find backend/ -name 'quarkus-run.jar' -print -quit)"
-
-      - name: Check if Quarkus JAR exists
-        id: check_jar
-        run: echo "::set-output name=exists::$(test -n '${{ steps.find_jar.outputs.jar_path }}' && echo true || echo false)"
-
-      - name: Print Quarkus JAR path
-        run: echo "Quarkus JAR path ${{ steps.find_jar.outputs.jar_path }}"
-
-      - name: Start Quarkus Backend
-        run: |
-          if [ "${{ steps.check_jar.outputs.exists }}" == "true" ]; then
-            java -jar "${{ steps.find_jar.outputs.jar_path }}"
-          else
-            echo "Quarkus JAR not found. Skipping backend startup."
-          fi
-        working-directory: backend
