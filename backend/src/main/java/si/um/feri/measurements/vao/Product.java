@@ -1,4 +1,4 @@
-package si.um.feri.telecom.vao;
+package si.um.feri.measurements.vao;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Product {
 
-	public Product(si.um.feri.telecom.dto.Product dto) {
+	public Product(si.um.feri.measurements.dto.Product dto) {
 		setName(dto.name());
 		setMaxMeasure(dto.maxMeasure());
 		setMinMeasure(dto.minMeasure());
@@ -20,14 +20,14 @@ public class Product {
 
 	}
 
-	public void updateFrom(si.um.feri.telecom.dto.Product dto) {
+	public void updateFrom(si.um.feri.measurements.dto.Product dto) {
 		setName(dto.name());
 		setMaxMeasure(dto.maxMeasure());
 		setMinMeasure(dto.minMeasure());
 	}
 	
-	public si.um.feri.telecom.dto.Product toDto() {
-		return new si.um.feri.telecom.dto.Product(
+	public si.um.feri.measurements.dto.Product toDto() {
+		return new si.um.feri.measurements.dto.Product(
 			getId(),
 			getName(),
 			maxMeasure,
@@ -36,7 +36,7 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected int id;
+	protected Long id;
 
 	protected String name;
 
@@ -46,11 +46,11 @@ public class Product {
 
 	protected double minMeasure;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -1,26 +1,20 @@
-package si.um.feri.telecom.rest;
+package si.um.feri.measurements.rest;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.RestResponse;
-import si.um.feri.telecom.dao.MeasurementRepository;
-import si.um.feri.telecom.dao.ProductRepository;
-import si.um.feri.telecom.dto.post.PostMeasurement;
-import si.um.feri.telecom.dto.post.PostMeasurementResponse;
-import si.um.feri.telecom.vao.Measurement;
-import si.um.feri.telecom.vao.Product;
+import si.um.feri.measurements.dao.MeasurementRepository;
+import si.um.feri.measurements.dao.ProductRepository;
+import si.um.feri.measurements.dto.post.PostMeasurement;
+import si.um.feri.measurements.dto.post.PostMeasurementResponse;
+import si.um.feri.measurements.vao.Measurement;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
-@Path("/measurements")
+@Path("/product_measurement")
 public class MeasurementController {
 
     private static final Logger log = Logger.getLogger(MeasurementController.class.toString());
@@ -31,15 +25,11 @@ public class MeasurementController {
     @Inject
     ProductRepository productRepository;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<List<Measurement>> getAllProducts() {
-        return measurementRepository.listAll();
-    }
     boolean ok = true;
     @POST
     public Uni<RestResponse<PostMeasurementResponse>> addMeasurement(PostMeasurement m){
         return productRepository.findById(Long.valueOf(m.id())).onItem().transformToUni(item -> {
+                    log.info("id: "+item.getId());
                     Measurement vao = new Measurement(m, item);
                     boolean ok = true;
 
@@ -58,5 +48,5 @@ public class MeasurementController {
                             .onItem().transform(ignored -> RestResponse.ok(new PostMeasurementResponse(finalOk ? "ok" : "not ok")));
                 })
                 .onFailure().recoverWithItem(failure -> RestResponse.ResponseBuilder.create(Response.Status.NOT_ACCEPTABLE, new PostMeasurementResponse("product-not-found")).build());
-        }
+    }
 }

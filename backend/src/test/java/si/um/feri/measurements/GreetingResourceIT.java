@@ -1,4 +1,4 @@
-package si.um.feri.telecom;
+package si.um.feri.measurements;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

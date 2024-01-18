@@ -1,9 +1,8 @@
-package si.um.feri.telecom.vao;
+package si.um.feri.measurements.vao;
 
 import jakarta.persistence.*;
-import si.um.feri.telecom.dto.post.PostMeasurement;
+import si.um.feri.measurements.dto.post.PostMeasurement;
 
-import javax.annotation.processing.Generated;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,11 +17,11 @@ public class Measurement {
 
 	}
 
-	public si.um.feri.telecom.dto.Measurement toDto() {
-		return new si.um.feri.telecom.dto.Measurement(
-			id,
-				si.um.feri.telecom.dto.Measurement.JSON_DATE_FORMAT.format(created),
-			(product!=null)?product.getId():-1,
+	public si.um.feri.measurements.dto.Measurement toDto() {
+		return new si.um.feri.measurements.dto.Measurement(
+				id,
+				si.um.feri.measurements.dto.Measurement.JSON_DATE_FORMAT.format(created),
+			(product!=null)?Long.valueOf(product.getId()):-1,
 			value,
 			isOk
 		);
@@ -30,7 +29,7 @@ public class Measurement {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 
 	@Column(name = "measvalue")
 	private double value;
@@ -42,11 +41,11 @@ public class Measurement {
 	@ManyToOne
 	private Product product;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

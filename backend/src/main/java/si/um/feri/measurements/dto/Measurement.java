@@ -1,4 +1,4 @@
-package si.um.feri.telecom.dto;
+package si.um.feri.measurements.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 @JsonInclude(value = Include.NON_NULL)
 public record Measurement (
-	int id,
+	Long id,
 	String date,
-	int productId,
+	Long productId,
 	double avgTemperature,
 	boolean isOk) {
 

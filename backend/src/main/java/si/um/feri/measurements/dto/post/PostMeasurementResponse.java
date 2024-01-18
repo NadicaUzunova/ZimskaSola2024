@@ -1,11 +1,8 @@
-package si.um.feri.telecom.dto;
+package si.um.feri.measurements.dto.post;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value = Include.NON_NULL)
-public record Product (
-		int id,
-		String name,
-		double maxMeasure,
-		double minMeasure) {}
+public record PostMeasurementResponse(
+		String result) {}
