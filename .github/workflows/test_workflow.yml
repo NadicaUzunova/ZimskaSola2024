@@ -8,7 +8,8 @@ on:
 
 jobs:
 
-  start_database:
+  build_backend:
+      name: Start Postgres DB
       runs-on: ubuntu-latest
       services:
         postgres:
@@ -23,27 +24,25 @@ jobs:
             --health-retries 5
           ports:
             - 5432:5432
+            
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
   
-  build_backend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: '20'
-          cache: maven
-
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml -DskipTests
-        working-directory: backend
-
-      # - name: Run tests
-      #  run: mvn -B test
-      # working-directory: backend
+        - name: Setup Java
+          uses: actions/setup-java@v3
+          with:
+            distribution: 'adopt'
+            java-version: '20'
+            cache: maven
+  
+        - name: Build with Maven
+          run: mvn -B package --file pom.xml -DskipTests
+          working-directory: backend
+  
+        # - name: Run tests
+        #  run: mvn -B test
+        # working-directory: backend
 
   build_frontend:
     runs-on: ubuntu-latest
