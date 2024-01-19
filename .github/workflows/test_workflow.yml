@@ -10,17 +10,19 @@ jobs:
 
   start_database:
       runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-  
-        - name: Start PostgreSQL
-          run: |
-            docker run -d --name my-postgres -e POSTGRES_PASSWORD=postgres_pwd -p 5432:5432 postgres
+      services:
+        postgres:
+          image: postgres:16
           env:
-            POSTGRES_DB: measdb
             POSTGRES_USER: postgres_user
             POSTGRES_PASSWORD: postgres_pwd
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+          ports:
+            - 5432:5432
   
   build_backend:
     runs-on: ubuntu-latest
