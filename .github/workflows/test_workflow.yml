@@ -81,8 +81,18 @@ jobs:
             cache: maven
             
       - name: Start backend
-        run: java -jar /home/runner/work/ZimskaSola2024/ZimskaSola2024/backend/target/measurements-1.0.0.jar
+        run: |
+         ./mvnw quarkus:dev &
         working-directory: backend
+
+      - name: Wait for Quarkus Server to be Ready
+        run: |
+         echo "Waiting for Quarkus server to start..."
+         until curl --output /dev/null --silent --head --fail http://localhost:8280/health; do
+          printf '.'
+          sleep 5
+         done
+         echo "Quarkus server is up and running!"
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -96,5 +106,14 @@ jobs:
         working-directory: frontend
         
       - name: Start frontend
-        run: npm run start
+        run: npm run start &
         working-directory: frontend
+
+      - name: Wait for React Server to be Ready
+        run: |
+             echo "Waiting for React server to start..."
+             until curl --output /dev/null --silent --head --fail http://localhost:3000; do
+              printf '.'
+              sleep 5
+             done
+             echo "React server is up and running!"
