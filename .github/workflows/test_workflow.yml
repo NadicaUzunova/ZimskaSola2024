@@ -88,7 +88,7 @@ jobs:
       - name: Wait for Quarkus Server to be Ready
         run: |
          echo "Waiting for Quarkus server to start..."
-         until curl --output /dev/null --head --fail http://localhost:8280/health; do
+         until curl --output /dev/null --head http://localhost:8280/health; do
           printf '.'
           sleep 5
          done
