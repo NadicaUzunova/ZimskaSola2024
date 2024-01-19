@@ -81,7 +81,7 @@ jobs:
             cache: maven
             
       - name: Start backend
-        run: ./mvnw quarkus:dev
+        run: java -jar /home/runner/work/ZimskaSola2024/ZimskaSola2024/backend/target/measurements-1.0.0.jar
         working-directory: backend
 
       - name: Setup Node.js
