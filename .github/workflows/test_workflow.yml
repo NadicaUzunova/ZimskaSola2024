@@ -88,7 +88,7 @@ jobs:
       - name: Wait for Quarkus Server to be Ready
         run: |
          echo "Waiting for Quarkus server to start..."
-         until curl --output /dev/null --head http://localhost:8280/health; do
+         until curl --output /dev/null --head http://localhost:8280; do
           printf '.'
           sleep 5
          done
@@ -112,8 +112,16 @@ jobs:
       - name: Wait for React Server to be Ready
         run: |
              echo "Waiting for React server to start..."
-             until curl --output /dev/null --silent --head --fail http://localhost:3000; do
+             until curl --output /dev/null --silent --head http://localhost:3000; do
               printf '.'
               sleep 5
              done
              echo "React server is up and running!"
+
+      - name: Print React Page Content
+        run: |
+             echo "Fetching React page content..."
+             react_page_content=$(curl --silent http://localhost:3000)
+             echo "React page content:"
+             echo "$react_page_content"
+
