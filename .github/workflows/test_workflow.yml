@@ -54,9 +54,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Start backend
-        run: |
-          cd backend
-          ./mvnw quarkus:dev
+        run: ./mvnw quarkus:dev
         working-directory: backend
 
   build_frontend:
