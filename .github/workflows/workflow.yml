@@ -9,7 +9,7 @@ on:
 jobs:
 
   build_backend:
-    name: Build backend and connect to Postgres DB
+    name: Build backend
     runs-on: ubuntu-latest
   
     steps:
@@ -47,7 +47,7 @@ jobs:
         working-directory: frontend
         
       - name: Build frontend
-        run: npm run build --no-progress 2>&1 >/dev/null || true
+        run: npm run build --no-progress 2>&1 >/dev/null || true # Mutes ESlint warnings
         working-directory: frontend
 
   cypress:
@@ -117,11 +117,4 @@ jobs:
               sleep 5
              done
              echo "React server is up and running!"
-
-      - name: Print be Content
-        run: |
-             echo "Fetching be content..."
-             react_page_content=$(curl --silent http://localhost:8280/api/v1/history)
-             echo "React page content:"
-             echo "$react_page_content"
 
