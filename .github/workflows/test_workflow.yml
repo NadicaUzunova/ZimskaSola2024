@@ -56,7 +56,7 @@ jobs:
       - name: Start backend
         run: |
           cd backend
-          /home/runner/work/ZimskaSola2024/ZimskaSola2024/backend/target/measurements-1.0.0.jar
+          ./mvnw quarkus:dev
         working-directory: backend
 
   build_frontend:
