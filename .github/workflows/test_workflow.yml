@@ -43,7 +43,7 @@ jobs:
       - name: Check PostgreSQL connection
         run: |
           sleep 10  # Wait for PostgreSQL to start
-          PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d postgres -c "SELECT 1;"
+          PGPASSWORD=$postgres_pwd psql -h localhost -U $postgres_user -d postgres -c "SELECT 1;"
         continue-on-error: true  # Continue with the workflow even if the PostgreSQL connection test fails
 
   build_frontend:
