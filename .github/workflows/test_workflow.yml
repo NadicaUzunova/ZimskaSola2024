@@ -15,8 +15,8 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: postgres_user
-          POSTGRES_PASSWORD: postgres_pwd
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -43,7 +43,7 @@ jobs:
       - name: Check PostgreSQL connection
         run: |
           sleep 10  # Wait for PostgreSQL to start
-          PGPASSWORD=$postgres_pwd psql -h localhost -U $postgres_user -d postgres -c "SELECT 1;"
+          PGPASSWORD="${{ secrets.POSTGRES_PASSWORD }}" psql -h localhost -U "${{ secrets.POSTGRES_USER }}" -d postgres -c "SELECT 1;"
         continue-on-error: true  # Continue with the workflow even if the PostgreSQL connection test fails
 
   build_frontend:
