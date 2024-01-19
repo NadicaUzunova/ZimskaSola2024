@@ -53,6 +53,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '20'
+          cache: maven
+
       - name: Start backend
         run: ./mvnw quarkus:dev
         working-directory: backend
