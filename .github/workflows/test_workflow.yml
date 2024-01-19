@@ -9,40 +9,42 @@ on:
 jobs:
 
   build_backend:
-      name: Start Postgres DB
-      runs-on: ubuntu-latest
-      services:
-        postgres:
-          image: postgres:16
-          env:
-            POSTGRES_USER: postgres_user
-            POSTGRES_PASSWORD: postgres_pwd
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
-          ports:
-            - 5432:5432
+    name: Build backend and connect to Postgres DB
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_pwd
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
             
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
   
-        - name: Setup Java
-          uses: actions/setup-java@v3
-          with:
-            distribution: 'adopt'
-            java-version: '20'
-            cache: maven
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '20'
+          cache: maven
   
-        - name: Build with Maven
-          run: mvn -B package --file pom.xml -DskipTests
-          working-directory: backend
-  
-        # - name: Run tests
-        #  run: mvn -B test
-        # working-directory: backend
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -DskipTests
+        working-directory: backend
+
+      - name: Check PostgreSQL connection
+        run: |
+          sleep 10  # Wait for PostgreSQL to start
+          PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d postgres -c "SELECT 1;"
+        continue-on-error: true  # Continue with the workflow even if the PostgreSQL connection test fails
 
   build_frontend:
     runs-on: ubuntu-latest
@@ -64,4 +66,4 @@ jobs:
         
       - name: Build frontend
         run: npm run build --no-progress 2>&1 >/dev/null || true
-        working-directory: frontend  
+        working-directory: frontend
