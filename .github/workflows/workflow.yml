@@ -9,7 +9,7 @@ on:
 jobs:
 
   build_backend:
-    name: Build backend
+    name: 
     runs-on: ubuntu-latest
   
     steps:
@@ -20,12 +20,12 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
-          java-version: '21'
+          java-version: 
           cache: maven
   
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml -DskipTests
-        working-directory: backend
+      - name: 
+        run: 
+        working-directory:
 
 
   build_frontend:
@@ -40,13 +40,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
+          cache: 
+          cache-dependency-path: 
   
       - name: Install dependencies
-        run: npm ci
-        working-directory: frontend
+        run: 
+        working-directory: 
         
       - name: Build frontend
-        run: npm run build --no-progress 2>&1 >/dev/null || true # Mutes ESlint warnings
-        working-directory: frontend
+        run:  --no-progress 2>&1 >/dev/null || true # Mutes ESlint warnings
+        working-directory: 
