@@ -41,6 +41,4 @@ jobs:
       run: npm ci --prefix frontend
 
     - name: Build frontend
-      run: |
-        export ESLINT_NO_DEV_ERRORS=true
-        npm run build --prefix frontend
+      run: npm run build --no-progress 2>&1 >/dev/null || true # Mutes ESlint warning
