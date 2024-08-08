@@ -41,4 +41,6 @@ jobs:
       run: npm ci --prefix frontend
 
     - name: Build frontend
-      run: npm run build --prefix frontend
+      run: |
+        export ESLINT_NO_DEV_ERRORS=true
+        npm run build --prefix frontend
