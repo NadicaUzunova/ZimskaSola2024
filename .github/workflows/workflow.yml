@@ -23,7 +23,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file backend/pom.xml -DskipTests
 
-  test_fronend:
+  test_frontend:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout code
@@ -42,7 +42,7 @@ jobs:
         working-directory: frontend/tests
 
   build_frontend:
-    needs: build_backend
+    needs: [build_backend, test_frontend]
     runs-on: ubuntu-latest
 
     steps:
