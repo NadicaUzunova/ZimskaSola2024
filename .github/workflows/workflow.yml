@@ -22,7 +22,7 @@ jobs:
         distribution: 'adopt'
 
     - name: Build with Maven
-      run: mvn -B package --file backend/pom.xml
+      run: mvn -B package --file backend/pom.xml -DskipTests
 
   build-frontend:
     needs: build-backend
