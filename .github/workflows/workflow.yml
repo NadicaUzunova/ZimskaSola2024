@@ -42,7 +42,7 @@ jobs:
     - name: Build
       run: cd frontend && npm run build --no-progress 2>&1 >/dev/null || true # Mutes ESlint warnings
 
-  run_backend:
+  start_backend:
     needs: build_backend
     runs-on: ubuntu-latest
 
@@ -56,11 +56,11 @@ jobs:
         java-version: '21'
         distribution: 'adopt'
 
-    - name: Run with Maven
-      run: mvn -B exec:java --file backend/pom.xml
+    - name: Start backend
+      run: mvn -B spring-boot:run --file backend/pom.xml &
 
   run_frontend:
-    needs: run_backend
+    needs: start_backend
     runs-on: ubuntu-latest
 
     steps:
@@ -75,5 +75,5 @@ jobs:
     - name: Install dependencies
       run: cd frontend && npm ci
 
-    - name: Run
+    - name: Run frontend
       run: cd frontend && npm start
