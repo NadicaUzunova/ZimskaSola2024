@@ -35,10 +35,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
+          
       - name: Install dependencies
         run: cd frontend && npm ci
+        
       - name: Run tests
-        run: cd frontend && npm test
+        run: cd frontend && npm test --findRelatedTests **/*.test.js
 
   build_frontend:
     needs: [build_backend, test_frontend]
