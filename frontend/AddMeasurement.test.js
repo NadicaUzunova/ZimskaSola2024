@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
-import AddMeasurement from '../src/components/Measurements/AddMeasurement';
+import AddMeasurement from './src/components/Measurements/AddMeasurement';
 
 describe('AddMeasurement', () => {
   it('renders the component', () => {
