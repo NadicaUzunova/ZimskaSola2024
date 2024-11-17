@@ -20,6 +20,24 @@ public class AddTestData {
     @Inject
     MeasurementRepository measurementRepository;
 
+    /**
+     * This method is invoked during the startup event of the application.
+     * It initializes the database with predefined products and their associated measurements.
+     *
+     * <p>This method subscribes to the startup event and executes a transaction that
+     * creates and persists two products: "Milka Classic" and "Chicken Breasts",
+     * along with their respective measurements.</p>
+     *
+     * @param ev the startup event that triggers this method
+     * @throws Throwable if an error occurs during the transaction or persistence operations
+     *
+     * <p>Exceptions that may be thrown include:</p>
+     * <ul>
+     *   <li><strong>PersistenceException:</strong> If there is an error while persisting the products or measurements.</li>
+     *   <li><strong>IllegalArgumentException:</strong> If the provided values for minimum or maximum measures are invalid.</li>
+     *   <li><strong>TransactionException:</strong> If there is an issue with the transaction management.</li>
+     * </ul>
+     */
     public void onStart(@Observes StartupEvent ev) throws Throwable {
         VertxContextSupport.subscribeAndAwait(() ->
             Panache.withTransaction(() -> {
