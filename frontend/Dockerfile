@@ -10,7 +10,7 @@ COPY . /app
 RUN npm run build
 
 # stage 2 - build the final image and copy the react build files
-FROM nginx:1.23.2-alpine
+FROM nginx:1.27.3-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
